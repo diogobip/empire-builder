@@ -1,6 +1,13 @@
 from army import UnitType, Army
 from territory import Territory
+from events import Event
+import random
 import json
+
+drought = Event("Drought", "A dry season withers your crops.", "food", -10)
+good_harvest = Event("Good Harvest", "An excellent season brings extra food.", "food", 15)
+bandit_theft = Event("Bandit Theft", "Thieves steal from your storehouse.", "gold", -5)
+trade_windfall = Event("Trade Windfall", "A passing merchant pays well.", "gold", 10)
 
 archer_type = UnitType("Archer", attack=6, defense=2, upkeep=1)
 infantry_type = UnitType("Infantry", attack=8, defense=5, upkeep=1)
@@ -39,7 +46,20 @@ bretagne = Territory("Bretagne", "food", 5, 8)
 rheims = Territory("Rheims", "gold", 5, 14)
 paris = Territory("Paris", "wood", 5, 20)
 
+events = [drought, good_harvest, bandit_theft, trade_windfall]
+
 #functions
+def show_help():
+    print("""
+Available actions:
+  farm, mine, chop, quarry       - assign your people to gather resources
+  build house / build farms / build mineshaft / build barrack
+  recruit                        - recruit 5 Infantry (needs a Barracks)
+  attack                         - raid the bandit camp
+  conquer bretagne / conquer rheims / conquer paris
+  save / load                    - save or load your progress
+  help                           - show this menu again
+""")
 def check_famine(food, population):
     if food < 0:
         food = 0
@@ -54,6 +74,8 @@ def apply_job(choice, food, wood, stone, gold,buildings,population):
             food += 20
         else:
             food += 10
+    elif choice == "help":
+        show_help()
         
     elif choice == "mine":
             if buildings["mineshaft"]:
@@ -223,6 +245,8 @@ def load_game():
 
     return population, food, wood, stone, gold, buildings, rival_population
 
+show_help()
+
 #this is the main loop 
 while True:
     choice = input("What should your people do? ")
@@ -232,6 +256,11 @@ while True:
 
     if population <= 0:
         print("Your tribe has perished. Game over.")
+        print("Thank you for playing!")
+        break
+    if bretagne.conquered and rheims.conquered and paris.conquered:
+        print("You have conquered all of France! Victory!")
+        print("Thank you for playing!")
         break
 
     food, wood, stone, gold,buildings,population = apply_job(choice, food, wood, stone, gold,buildings,population)
@@ -250,6 +279,10 @@ while True:
     if paris.conquered:
         if paris.resource_type == "wood":
             wood += paris.resource_amount
+    
+    if random.randint(1, 4) == 1:
+        chosen_event = random.choice(events)
+        food, wood, stone, gold = chosen_event.trigger(food, wood, stone, gold)
 
     rival_population += 1
     if rival_population % 5 == 0:
