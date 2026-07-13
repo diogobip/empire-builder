@@ -25,11 +25,3 @@ This project is a turn-based strategy simulation designed with an object-oriente
   * **`json.load`**: Parses the JSON file back into Python-readable data structures for session restoration[cite: 8, 9].
 
 * **Encapsulation:** By wrapping the `resources` dictionary within an `Economy` class, the architecture allows for safer state modification through dedicated methods rather than global variable manipulation[cite: 7].
-
-## 4. Technical Roadmap for Refactoring
-
-To address the current bloat, you are moving toward:
-
-* **Polymorphism:** Using inheritance in `Buildings` to allow for tiered upgrades without requiring distinct, hard-coded functions for every structure level[cite: 6].
-
-* **Command Pattern:** Replacing the monolithic `apply_job` conditional ladder with a dictionary of function references, enabling cleaner, scalable routing of user inputs[cite: 8].
