@@ -1,1 +1,1 @@
-{"house": true, "farm": false}
+{"population": 20, "food": 54, "wood": 20, "stone": 10, "gold": 10, "buildings": {"house": false, "farm": false, "mineshaft": false, "barrack": false}, "my_army_units": {"Archer": 0, "Infantry": 0, "Cavalry": 0}, "rival_population": 12, "rival_army_units": {"Archer": 0, "Infantry": 3, "Cavalry": 0}, "bretagne_conquered": false, "rheims_conquered": false, "paris_conquered": false}

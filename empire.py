@@ -1,5 +1,6 @@
 from army import UnitType, Army
 from territory import Territory
+import json
 
 archer_type = UnitType("Archer", attack=6, defense=2, upkeep=1)
 infantry_type = UnitType("Infantry", attack=8, defense=5, upkeep=1)
@@ -157,6 +158,11 @@ def apply_job(choice, food, wood, stone, gold,buildings,population):
             else:
                 my_army.apply_losses()
                 print("Your army was not strong enough to conquer Paris.")
+    elif choice == "save":
+        save_game()
+    elif choice == "load":
+        population, food,wood, stone, gold,  buildings, rival_population = load_game()
+        print("Game loaded!")
 
     else:
         print("Not a valid choice, your people did nothing this turn.")
@@ -176,6 +182,46 @@ def show_status(population, food, wood, stone, gold, buildings):
     for unit_type, count in my_army.units.items():
         print(f"  {unit_type}: {count}")
     print(f"Rival City -> Population: {rival_population} | Army: {rival_army.units}")
+
+def save_game():
+    save_data = {
+        "population": population,
+        "food": food,
+        "wood": wood,
+        "stone": stone,
+        "gold": gold,
+        "buildings": buildings,
+        "my_army_units": my_army.units,
+        "rival_population": rival_population,
+        "rival_army_units": rival_army.units,
+        "bretagne_conquered": bretagne.conquered,
+        "rheims_conquered": rheims.conquered,
+        "paris_conquered": paris.conquered
+    }
+    file = open("save.json", "w")
+    json.dump(save_data, file)
+    file.close()
+    print("Game saved!")
+
+def load_game():
+    file = open("save.json", "r")
+    save_data = json.load(file)
+    file.close()
+
+    population = save_data["population"]
+    food = save_data["food"]
+    wood = save_data["wood"]
+    stone = save_data["stone"]
+    gold = save_data["gold"]
+    buildings = save_data["buildings"]
+    my_army.units = save_data["my_army_units"]
+    rival_population = save_data["rival_population"]
+    rival_army.units = save_data["rival_army_units"]
+    bretagne.conquered = save_data["bretagne_conquered"]
+    rheims.conquered = save_data["rheims_conquered"]
+    paris.conquered = save_data["paris_conquered"]
+
+    return population, food, wood, stone, gold, buildings, rival_population
 
 #this is the main loop 
 while True:
