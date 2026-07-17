@@ -25,3 +25,6 @@ This project is a turn-based strategy simulation designed with an object-oriente
   * **`json.load`**: Parses the JSON file back into Python-readable data structures for session restoration[cite: 8, 9].
 
 * **Encapsulation:** By wrapping the `resources` dictionary within an `Economy` class, the architecture allows for safer state modification through dedicated methods rather than global variable manipulation[cite: 7].
+
+* <img width="2000" height="1842" alt="image" src="https://github.com/user-attachments/assets/bcdef534-5fd5-4db7-a39c-f5c47fcb2b04" />
+
