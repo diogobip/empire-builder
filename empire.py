@@ -1,9 +1,11 @@
+#Imports
 from army import UnitType, Army
 from territory import Territory
 from events import Event
 import random
 import json
 
+#Dictionaries
 drought = Event("Drought", "A dry season withers your crops.", "food", -10)
 good_harvest = Event("Good Harvest", "An excellent season brings extra food.", "food", 15)
 bandit_theft = Event("Bandit Theft", "Thieves steal from your storehouse.", "gold", -5)
@@ -54,7 +56,7 @@ def show_help():
 Available actions:
   farm, mine, chop, quarry       - assign your people to gather resources
   build house / build farms / build mineshaft / build barrack
-  recruit                        - recruit 5 Infantry (needs a Barracks)
+  recruit                        - recruit 5 Infantry (needs a Barrack)
   attack                         - raid the bandit camp
   conquer bretagne / conquer rheims / conquer paris
   save / load                    - save or load your progress
